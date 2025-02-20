@@ -5,7 +5,7 @@ class Member(models.Model):
     role = models.CharField(max_length=20)
     department = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
-    status = models.CharField(default='Active', max_length=50)
+    status = models.CharField( max_length=50)
 
     def __str__(self):
         return self.name
