@@ -46,12 +46,21 @@ class Task(models.Model):
     
 #team
 class Team(models.Model):
-    teamname = models.CharField(max_length=20)
-    teamleader = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="teams")
-    teammembers = models.ManyToManyField(Member, related_name="teams")
+    teamname = models.CharField(max_length=20,null=True)
+    teamleader = models.ForeignKey(
+        'Member',
+        on_delete=models.CASCADE,
+        related_name='leader_of_teams'  # Changed related_name to avoid clash
+    )
+    teammembers = models.ManyToManyField(
+        'Member',
+        related_name='member_of_teams'  # Changed related_name to avoid clash
+    )
+    project= models.ForeignKey(Project, on_delete=models.CASCADE, related_name="teams",null=True)
 
     def __str__(self):
-        return self.teamname
+        return f"Team {self.id}"
+
 
 #announcement
 class Announcement(models.Model):

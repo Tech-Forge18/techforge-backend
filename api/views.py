@@ -17,8 +17,8 @@ class ProfileDetailView(generics.RetrieveUpdateAPIView):
     serializer_class = ProfileSerializer
 
 class MemberListCreateView(generics.ListCreateAPIView):
-   def get_queryset(self):
-        return Member.objects.all()
+    queryset = Member.objects.all()
+    serializer_class = MemberSerializer
 
 class MemberDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Member.objects.all()

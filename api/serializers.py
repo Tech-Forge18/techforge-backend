@@ -16,13 +16,22 @@ class MemberSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'role', 'department', 'email', 'status']
         read_only_fields = ['id']
 
+
+class ProjectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Project        
+        fields = ['id', 'name', 'client', 'deadline', 'teamsize', 'description']
+        read_only_fields = ['id']
+
+
 class TeamSerializer(serializers.ModelSerializer):
     teamleader = MemberSerializer(read_only=True)  # Full leader details
     teammembers = MemberSerializer(many=True, read_only=True)  # Full members details
+    project = ProjectSerializer(read_only=True)
 
     class Meta:
         model = Team
-        fields = ['id', 'teamname', 'teamleader', 'teammembers']
+        fields = ['id', 'teamname', 'teamleader', 'teammembers', 'project']
         read_only_fields = ['id']
 
 
@@ -32,11 +41,6 @@ class CourseSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'instructor', 'duration', 'level', 'enrolledstudents', 'description']
         read_only_fields = ['id']
 
-class ProjectSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Project        
-        fields = ['id', 'name', 'client', 'deadline', 'teamsize', 'description']
-        read_only_fields = ['id']
 
 
 class ClientSerializer(serializers.ModelSerializer):
