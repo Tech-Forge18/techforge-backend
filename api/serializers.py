@@ -25,15 +25,18 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class TeamSerializer(serializers.ModelSerializer):
-    teamleader = MemberSerializer(read_only=True)  # Full leader details
-    teammembers = MemberSerializer(many=True, read_only=True)  # Full members details
-    project = ProjectSerializer(read_only=True)
+    # Display names for team members and project
+    teammembers = serializers.StringRelatedField(many=True, read_only=True)
+    project = serializers.StringRelatedField(read_only=True)
+
+    # Accept member IDs and project ID for creation
+    teammember_ids = serializers.PrimaryKeyRelatedField(queryset=Member.objects.all(), many=True, source='teammembers', write_only=True)
+    project_id = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all(), source='project', write_only=True)
 
     class Meta:
         model = Team
-        fields = ['id', 'teamname', 'teamleader', 'teammembers', 'project']
-        read_only_fields = ['id']
-
+        fields = ['id', 'name', 'leader', 'teammembers', 'teammember_ids', 'project', 'project_id']
+        read_only_fields = ['id', 'teammembers', 'project']
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
