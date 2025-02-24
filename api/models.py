@@ -5,7 +5,7 @@ class Member(models.Model):
     role = models.CharField(max_length=20)
     department = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
-    status = models.CharField(default='Active', max_length=50)
+    status = models.CharField( max_length=50)
 
     def __str__(self):
         return self.name
@@ -35,31 +35,26 @@ class Course(models.Model):
     
 #tasks
 class Task(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=50)
     duedate = models.DateField()
     status = models.CharField(max_length=20)
     assignedto = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="tasks")
     description = models.TextField()
+    comment = models. TextField(default="No comment")
+    priority = models. CharField(max_length=20, default="Normal")
 
     def __str__(self):
         return self.title
     
 #team
 class Team(models.Model):
-    teamname = models.CharField(max_length=20,null=True)
-    teamleader = models.ForeignKey(
-        'Member',
-        on_delete=models.CASCADE,
-        related_name='leader_of_teams'  # Changed related_name to avoid clash
-    )
-    teammembers = models.ManyToManyField(
-        'Member',
-        related_name='member_of_teams'  # Changed related_name to avoid clash
-    )
-    project= models.ForeignKey(Project, on_delete=models.CASCADE, related_name="teams",null=True)
+    name = models.CharField(max_length=100)
+    leader = models.CharField(max_length=20)
+    teammembers = models.ManyToManyField(Member, related_name='teams')
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='teams')
 
     def __str__(self):
-        return f"Team {self.id}"
+        return self.name
 
 
 #announcement
@@ -106,6 +101,3 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.firstname
-    
-
-
