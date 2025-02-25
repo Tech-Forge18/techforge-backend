@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 
 class Member(models.Model):
     name = models.CharField(max_length=20)
@@ -33,18 +34,7 @@ class Course(models.Model):
     def __str__(self):
         return self.name
     
-#tasks
-class Task(models.Model):
-    title = models.CharField(max_length=50)
-    duedate = models.DateField()
-    status = models.CharField(max_length=20)
-    assignedto = models.ForeignKey(Member, on_delete=models.CASCADE, related_name="tasks")
-    description = models.TextField()
-    comment = models. TextField(default="No comment")
-    priority = models. CharField(max_length=20, default="Normal")
 
-    def __str__(self):
-        return self.title
     
 #team
 class Team(models.Model):
@@ -56,10 +46,22 @@ class Team(models.Model):
     def __str__(self):
         return self.name
 
+#tasks
+class Task(models.Model):
+    title = models.CharField(max_length=50)
+    duedate = models.DateField()
+    status = models.CharField(max_length=20)
+    assignedto = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="tasks")
+    description = models.TextField()
+    priority = models. CharField(max_length=20, default="Normal")
 
+    def __str__(self):
+        
+        return self.title
+    
 #announcement
 class Announcement(models.Model):
-    title = models.CharField(max_length=30)
+    title = models.CharField(max_length=50)
     content = models.TextField()
     date = models.DateField()
 
@@ -101,3 +103,29 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.firstname
+
+
+class Event(models.Model):
+    title = models.CharField(max_length=100)
+    startdate = models.DateField()
+    enddate = models.DateField()
+    time = models.TimeField(null=True, blank=True)  # Use datetime.time object
+    category = models.CharField(max_length=20)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+    
+class Support(models.Model):
+    title = models.CharField(max_length=100)
+    category = models.CharField(max_length=20)
+    priority = models.CharField(max_length=20)
+    description = models.TextField()
+    contactinfo = models.IntegerField()
+    file = models.FileField(upload_to='support/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)  # Automatically stores the date and time when created
+    updated_at = models.DateTimeField(auto_now=True)
+    
+
+    def __str__(self):
+        return self.title

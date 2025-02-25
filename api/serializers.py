@@ -1,6 +1,6 @@
 # api/serializers.py
 from rest_framework import serializers
-from .models import  Profile, Announcement, Task, Client, Project, Member, Team, Course
+from .models import  Profile, Announcement, Task, Client, Project, Member, Team, Course, Event, Support
 
 # profile
 
@@ -25,18 +25,24 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 
 class TeamSerializer(serializers.ModelSerializer):
-    # Display names for team members and project
-    teammembers = serializers.StringRelatedField(many=True, read_only=True)
-    project = serializers.StringRelatedField(read_only=True)
+    # Use project name directly
+    project = serializers.SlugRelatedField(
+        queryset=Project.objects.all(),
+        slug_field='name',  # Use the 'name' field of the Project model
+    )
 
-    # Accept member IDs and project ID for creation
-    teammember_ids = serializers.PrimaryKeyRelatedField(queryset=Member.objects.all(), many=True, source='teammembers', write_only=True)
-    project_id = serializers.PrimaryKeyRelatedField(queryset=Project.objects.all(), source='project', write_only=True)
+    # Use team member names directly
+    teammembers = serializers.SlugRelatedField(
+        queryset=Member.objects.all(),
+        slug_field='name',  # Use the 'name' field of the Member model
+        many=True,
+    )
 
     class Meta:
         model = Team
-        fields = ['id', 'name', 'leader', 'teammembers', 'teammember_ids', 'project', 'project_id']
-        read_only_fields = ['id', 'teammembers', 'project']
+        fields = ['id', 'name', 'leader', 'teammembers', 'project']
+        read_only_fields = ['id']
+
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
@@ -47,11 +53,16 @@ class CourseSerializer(serializers.ModelSerializer):
 
 
 class ClientSerializer(serializers.ModelSerializer):
-    project = ProjectSerializer(read_only=True)
+    project = serializers.SlugRelatedField(
+        queryset=Project.objects.all(),
+        slug_field='name',  # Use the 'name' field of the Project model
+    )
+
     class Meta:
-        model = Client        
+        model = Client
         fields = ['id', 'name', 'project', 'email', 'contactinfo', 'status']
         read_only_fields = ['id']
+
 
 class AnnouncementSerializer(serializers.ModelSerializer):
     class Meta:
@@ -60,9 +71,25 @@ class AnnouncementSerializer(serializers.ModelSerializer):
         read_only_fields = ['id']
 
 class TaskSerializer(serializers.ModelSerializer):
-    assignedto = MemberSerializer(read_only=True)  # Returns full Member details
+    # Use SlugRelatedField to represent the team by its name
+    assignedto = serializers.SlugRelatedField(
+        queryset=Team.objects.all(),
+        slug_field='name',  # Use the 'name' field of the Team model
+    )
+
     class Meta:
-        model = Task        
-        fields = ['id', 'title', 'duedate', 'status', 'assignedto', 'description']
+        model = Task
+        fields = ['id', 'title', 'duedate', 'status', 'assignedto', 'description','priority']
         read_only_fields = ['id']
 
+class EventSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['id', 'title', 'startdate', 'enddate','time', 'category', 'description']
+        read_only_fields = ['id']
+
+class SupportSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Support
+        fields = ['id', 'title', 'category', 'priority', 'description', 'contactinfo', 'file', 'created_at', 'updated_at']
+        read_only_fields = ['id', 'created_at', 'updated_at']

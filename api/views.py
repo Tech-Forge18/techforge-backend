@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework import generics
-from .models import  Profile, Announcement, Task, Client, Project, Member, Team, Course
-from .serializers import  ProfileSerializer, AnnouncementSerializer, TaskSerializer, ClientSerializer, ProjectSerializer, MemberSerializer, TeamSerializer, CourseSerializer
+from .models import  Profile, Announcement, Task, Client, Project, Member, Team, Course, Event, Support
+from .serializers import  ProfileSerializer, AnnouncementSerializer, TaskSerializer, ClientSerializer, ProjectSerializer, MemberSerializer, TeamSerializer, CourseSerializer, EventSerializer, SupportSerializer
 
  #List & Create Profiles
 class ProfileListCreateView(generics.ListCreateAPIView):
@@ -71,3 +71,19 @@ class TeamListCreateView(generics.ListCreateAPIView):
 class TeamDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
+
+class EventListCreateView(generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class EventDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+class SupportListCreateView(generics.ListCreateAPIView):
+    queryset = Support.objects.all()
+    serializer_class = SupportSerializer
+
+class SupportDetailView(generics.RetrieveUpdateDestroyAPIView): 
+    queryset = Support.objects.all()
+    serializer_class = SupportSerializer

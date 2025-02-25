@@ -1,6 +1,6 @@
 # api/urls.py
 from django.urls import path
-from .views import ProfileListCreateView, ProfileDetailView, TaskListCreateView, TaskDetailView, ClientListCreateView, ClientDetailView, ProjectListCreateView, ProjectDetailView, MemberListCreateView, MemberDetailView,CourseListCreateView, CourseDetailView,  TeamListCreateView, TeamDetailView,AnnouncementListCreateView, AnnouncementDetailView
+from .views import ProfileListCreateView, ProfileDetailView, TaskListCreateView, TaskDetailView, ClientListCreateView, ClientDetailView, ProjectListCreateView, ProjectDetailView, MemberListCreateView, MemberDetailView,CourseListCreateView, CourseDetailView,  TeamListCreateView, TeamDetailView,AnnouncementListCreateView, AnnouncementDetailView, EventListCreateView, EventDetailView, SupportListCreateView, SupportDetailView
 
 urlpatterns = [
    
@@ -27,5 +27,11 @@ urlpatterns = [
 
     path('announcements/', AnnouncementListCreateView.as_view(), name='announcement-list'),
     path('announcements/<int:pk>/', AnnouncementDetailView.as_view(), name='announcement-detail'),
+
+    path('events/', EventListCreateView.as_view(), name='event-list'),
+    path('events/<int:pk>/', EventDetailView.as_view(), name='event-detail'),
+
+    path('supports/', SupportListCreateView.as_view(), name='support-list'),
+    path('supports/<int:pk>/', SupportDetailView.as_view(), name='support-detail'),
 
 ]
