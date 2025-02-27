@@ -128,3 +128,34 @@ class Support(models.Model):
     def __str__(self):
         return self.title
 
+
+class Timelog(models.Model):
+    date = models.DateField()
+    start_time = models.TimeField()
+    end_time = models.TimeField()
+    break_time = models.PositiveIntegerField(help_text="Break time in minutes")
+    task_description = models.TextField()
+
+    def __str__(self):
+        return f"Time log for {self.date} - {self.start_time} to {self.end_time}"
+
+class LeaveRequest(models.Model):
+    LEAVE_TYPES = (
+        ('vacation', 'Vacation'),
+        ('sick', 'Sick Leave'),
+        ('personal', 'Personal Leave'),
+    )
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('denied', 'Denied'),
+    )
+
+    type = models.CharField(max_length=20, choices=LEAVE_TYPES)
+    start_date = models.DateField()
+    end_date = models.DateField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.type} request from {self.start_date} to {self.end_date}"

@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view
 from rest_framework import generics
-from .models import  Profile, Announcement, Task, Client, Project, Member, Team, Course, Event, Support
-from .serializers import  ProfileSerializer, AnnouncementSerializer, TaskSerializer, ClientSerializer, ProjectSerializer, MemberSerializer, TeamSerializer, CourseSerializer, EventSerializer, SupportSerializer
+from .models import  Profile, Announcement, Task, Client, Project, Member, Team, Course, Event, Support,Timelog, LeaveRequest
+from .serializers import  ProfileSerializer, AnnouncementSerializer, TaskSerializer, ClientSerializer, ProjectSerializer, MemberSerializer, TeamSerializer, CourseSerializer, EventSerializer, SupportSerializer, TimelogSerializer, LeaveRequestSerializer, TotalsSerializer
 
  #List & Create Profiles
 class ProfileListCreateView(generics.ListCreateAPIView):
@@ -87,3 +87,33 @@ class SupportListCreateView(generics.ListCreateAPIView):
 class SupportDetailView(generics.RetrieveUpdateDestroyAPIView): 
     queryset = Support.objects.all()
     serializer_class = SupportSerializer
+
+class TimelogListCreateView(generics.ListCreateAPIView):
+   queryset = Timelog.objects.all()
+   serializer_class = TimelogSerializer
+
+class TimelogDetailView(generics.RetrieveDestroyAPIView):
+    queryset = Timelog.objects.all()
+    serializer_class = TimelogSerializer
+
+class LeaveRequestListCreate(generics.ListCreateAPIView):
+    queryset = LeaveRequest.objects.all()
+    serializer_class = LeaveRequestSerializer
+
+class LeaveRequestDetail(generics.RetrieveUpdateAPIView):
+    queryset = LeaveRequest.objects.all()
+    serializer_class = LeaveRequestSerializer
+
+class DashboardTotalsView(APIView):
+    def get(self, request):
+        totals = {
+            "totalMembers": Member.objects.count(),
+            "totalClients": Client.objects.count(),
+            "totalProjects": Project.objects.count(),
+            "totalCourses": Course.objects.count(),
+            "totalTeams": Team.objects.count(),
+            # Assuming "Vacancies" could be open tasks or support tickets; adjust as needed
+            "totalVacancies": Task.objects.filter(status="Pending").count(),  # Example derivation
+        }
+        serializer = TotalsSerializer(totals)
+        return Response(serializer.data)

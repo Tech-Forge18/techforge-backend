@@ -1,6 +1,7 @@
 # api/urls.py
 from django.urls import path
-from .views import ProfileListCreateView, ProfileDetailView, TaskListCreateView, TaskDetailView, ClientListCreateView, ClientDetailView, ProjectListCreateView, ProjectDetailView, MemberListCreateView, MemberDetailView,CourseListCreateView, CourseDetailView,  TeamListCreateView, TeamDetailView,AnnouncementListCreateView, AnnouncementDetailView, EventListCreateView, EventDetailView, SupportListCreateView, SupportDetailView
+from .views import ProfileListCreateView, ProfileDetailView, TaskListCreateView, TaskDetailView, ClientListCreateView, ClientDetailView, ProjectListCreateView, ProjectDetailView, MemberListCreateView, MemberDetailView,CourseListCreateView, CourseDetailView,  TeamListCreateView, TeamDetailView,AnnouncementListCreateView, AnnouncementDetailView, EventListCreateView, EventDetailView, SupportListCreateView, SupportDetailView, TimelogListCreateView, TimelogDetailView, LeaveRequestListCreate, LeaveRequestDetail,DashboardTotalsView
+
 
 urlpatterns = [
    
@@ -33,5 +34,14 @@ urlpatterns = [
 
     path('supports/', SupportListCreateView.as_view(), name='support-list'),
     path('supports/<int:pk>/', SupportDetailView.as_view(), name='support-detail'),
+
+    path('timelogs/', TimelogListCreateView.as_view(), name='timelog-list'),
+    path('timelogs/<int:pk>/', TimelogDetailView.as_view(), name='timelog-detail'),
+
+    path('leave-requests/', LeaveRequestListCreate.as_view(), name='leave-request-list-create'),
+    path('leave-requests/<int:pk>/', LeaveRequestDetail.as_view(), name='leave-request-detail'),
+
+    path("dashboard/totals/", DashboardTotalsView.as_view(), name="dashboard-totals"),
+   
 
 ]

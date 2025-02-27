@@ -1,6 +1,6 @@
 # api/serializers.py
 from rest_framework import serializers
-from .models import  Profile, Announcement, Task, Client, Project, Member, Team, Course, Event, Support
+from .models import  Profile, Announcement, Task, Client, Project, Member, Team, Course, Event, Support,Timelog, LeaveRequest
 
 # profile
 
@@ -93,3 +93,22 @@ class SupportSerializer(serializers.ModelSerializer):
         model = Support
         fields = ['id', 'title', 'category', 'priority', 'description', 'contactinfo', 'file', 'created_at', 'updated_at']
         read_only_fields = ['id', 'created_at', 'updated_at']
+
+
+class TimelogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Timelog
+        fields = ['id', 'date', 'start_time', 'end_time', 'break_time', 'task_description']
+
+class LeaveRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LeaveRequest
+        fields = ['id', 'type', 'start_date', 'end_date', 'status', 'created_at']
+
+class TotalsSerializer(serializers.Serializer):
+    totalMembers = serializers.IntegerField()
+    totalClients = serializers.IntegerField()
+    totalProjects = serializers.IntegerField()
+    totalCourses = serializers.IntegerField()
+    totalTeams = serializers.IntegerField()
+    totalVacancies = serializers.IntegerField()
