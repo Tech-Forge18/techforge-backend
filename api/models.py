@@ -1,8 +1,8 @@
 from django.db import models
 
 class Member(models.Model):
-    name = models.CharField(max_length=20)
-    role = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
+    role = models.CharField(max_length=50)
     department = models.CharField(max_length=20)
     email = models.EmailField(unique=True)
     status = models.CharField( max_length=50)
@@ -12,8 +12,8 @@ class Member(models.Model):
 
 #Projects
 class Project(models.Model):
-    name = models.CharField(max_length=20)
-    client = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
+    client = models.CharField(max_length=100)
     deadline = models.DateField()
     teamsize = models.IntegerField()
     description = models.TextField()
@@ -23,8 +23,8 @@ class Project(models.Model):
     
 #course
 class Course(models.Model):
-    name = models.CharField(max_length=20)
-    instructor = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
+    instructor = models.CharField(max_length=100)
     duration = models.IntegerField()
     level = models.CharField(max_length=20)
     enrolledstudents = models.IntegerField()
@@ -38,7 +38,7 @@ class Course(models.Model):
 #team
 class Team(models.Model):
     name = models.CharField(max_length=100)
-    leader = models.CharField(max_length=20)
+    leader = models.CharField(max_length=50)
     teammembers = models.ManyToManyField(Member, related_name='teams')
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name='teams')
 
@@ -47,7 +47,7 @@ class Team(models.Model):
 
 #tasks
 class Task(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=200)
     duedate = models.DateField()
     status = models.CharField(max_length=20)
     assignedto = models.ForeignKey(Team, on_delete=models.CASCADE, related_name="tasks")
@@ -60,7 +60,7 @@ class Task(models.Model):
     
 #announcement
 class Announcement(models.Model):
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=200)
     content = models.TextField()
     date = models.DateField()
 
@@ -69,7 +69,7 @@ class Announcement(models.Model):
     
 #client
 class Client(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="clients")
     email = models.EmailField(unique=True)
     contactinfo = models.TextField()
@@ -82,23 +82,23 @@ class Client(models.Model):
 # Profile
 class Profile(models.Model):
     # Personal
-    firstname = models.CharField(max_length=20)
-    lastname = models.CharField(max_length=20)
+    firstname = models.CharField(max_length=50)
+    lastname = models.CharField(max_length=50)
     email = models.EmailField(unique=True)
     phone = models.IntegerField()  # Fixed
-    position = models.CharField(max_length=20)
+    position = models.CharField(max_length=50)
 
     # Address
-    country = models.CharField(max_length=20)
-    state = models.CharField(max_length=20)
-    postalcode = models.CharField(max_length=20)
-    taxid = models.CharField(max_length=20)
+    country = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    postalcode = models.CharField(max_length=50)
+    taxid = models.CharField(max_length=50)
 
     # Social media
-    facebook = models.CharField(max_length=100, blank=True, null=True)
-    twitter = models.CharField(max_length=100, blank=True, null=True)
-    instagram = models.CharField(max_length=100, blank=True, null=True)
-    linkedin = models.CharField(max_length=100, blank=True, null=True)
+    facebook = models.CharField(max_length=200, blank=True, null=True)
+    twitter = models.CharField(max_length=200, blank=True, null=True)
+    instagram = models.CharField(max_length=200, blank=True, null=True)
+    linkedin = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.firstname
@@ -116,7 +116,7 @@ class Event(models.Model):
         return self.title
     
 class Support(models.Model):
-    title = models.CharField(max_length=100)
+    title = models.CharField(max_length=300)
     category = models.CharField(max_length=20)
     priority = models.CharField(max_length=20)
     description = models.TextField()
