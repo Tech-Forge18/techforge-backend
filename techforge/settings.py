@@ -13,6 +13,7 @@ ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'techforge-frontend.vercel.app'
+    'https://techforge-backend.onrender.com'
 
 ]
 
