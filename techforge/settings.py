@@ -12,9 +12,8 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'techforge-frontend.vercel.app'
-    'https://techforge-backend.onrender.com'
-
+    'techforge-frontend.vercel.app',
+    'techforge-backend.onrender.com'  # Fixed missing comma
 ]
 
 # Application definition
@@ -44,8 +43,9 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000", 
-    "https://techforge-backend.onrender.com" # Your Next.js frontend
+    "http://localhost:3000",
+    "https://techforge-frontend.vercel.app",
+    "https://techforge-backend.onrender.com"
 ]
 
 ROOT_URLCONF = 'techforge.urls'
