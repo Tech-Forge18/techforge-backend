@@ -72,9 +72,7 @@ WSGI_APPLICATION = 'techforge.wsgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default="postgresql://tech_forge_user:RoJct2YtR0QSQitKgWt4BoJuiC6vM6lU@dpg-cv1upp5svqrc738qp9b0-a.oregon-postgres.render.com/tech_forge"
-    )
+    'default': dj_database_url.config(conn_max_age=600)
 }
 
 # Password validation
