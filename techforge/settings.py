@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = 'django-insecure-xs*^fmkfv+e$@rd6yrccd2r4#po#xoclb_uxb#j&&a$xbuo%(v'
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
@@ -43,7 +43,8 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Your Next.js frontend
+    "http://localhost:3000", 
+    "https://techforge-backend.onrender.com" # Your Next.js frontend
 ]
 
 ROOT_URLCONF = 'techforge.urls'
